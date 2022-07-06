@@ -35,6 +35,7 @@ public class ClienteResponseDTO {
                 cliente.getTelefone(),
                 cliente.getDataDeNascimento());
     }
+
 }
 
 
