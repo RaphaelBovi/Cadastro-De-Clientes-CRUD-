@@ -22,9 +22,8 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClienteRequestDTO save(@RequestBody ClienteRequestDTO cliente) {
-        this.service.save(cliente);
-        return cliente;
+    public ClienteResponseDTO save(@RequestBody ClienteRequestDTO cliente) {
+        return this.service.save(cliente);
     }
 
     @GetMapping

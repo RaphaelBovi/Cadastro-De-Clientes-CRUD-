@@ -16,9 +16,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public ClienteRequestDTO save(ClienteRequestDTO cliente) {
-        this.repository.save(cliente.toModel());
-        return cliente;
+    public ClienteResponseDTO save(ClienteRequestDTO cliente) {
+        return ClienteResponseDTO.from(this.repository.save(cliente.toModel()));
     }
 
     public ClienteResponseDTO findById(Long id) {
