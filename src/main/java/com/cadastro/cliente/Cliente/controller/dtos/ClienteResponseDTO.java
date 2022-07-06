@@ -2,11 +2,13 @@ package com.cadastro.cliente.Cliente.controller.dtos;
 
 import com.cadastro.cliente.Cliente.entity.Cliente;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+@Data
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class ClienteResponseDTO {
 
     private String telefone;
 
-    private LocalDateTime dataDeNascimento;
+    private LocalDate dataDeNascimento;
 
     public static ClienteResponseDTO from(Cliente cliente) {
         return new ClienteResponseDTO(
@@ -33,7 +35,6 @@ public class ClienteResponseDTO {
                 cliente.getTelefone(),
                 cliente.getDataDeNascimento());
     }
-
 }
 
 
