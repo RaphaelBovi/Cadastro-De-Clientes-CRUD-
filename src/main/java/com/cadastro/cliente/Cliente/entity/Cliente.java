@@ -1,22 +1,32 @@
 package com.cadastro.cliente.Cliente.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Table(name = "cliente")
 public class Cliente {
 
+    public Cliente(String nome, String email, String cpf, String telefone, LocalDate dataDeNascimento) {
+        this.email = email;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.dataDeNascimento = dataDeNascimento;
+    }
+
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -36,8 +46,6 @@ public class Cliente {
     private String telefone;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "dataNascimento", nullable = false)
-    private LocalDateTime dataDeNascimento;
-
+    private LocalDate dataDeNascimento;
 }
