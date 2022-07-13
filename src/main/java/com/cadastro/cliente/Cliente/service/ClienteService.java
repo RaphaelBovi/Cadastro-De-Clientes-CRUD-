@@ -28,15 +28,17 @@ public class ClienteService {
         return ClienteResponseDTO.from(cliente);
     }
 
-    public ClienteResponseDTO update(Long id, ClienteRequestDTO cliente) {
-        Optional<Cliente> byId = repository.findById(id);
-        if (byId.isPresent()) {
-            Cliente edit = byId.get();
-            edit.setId(id);
-            return ClienteResponseDTO.from(repository.save(cliente.update()));
-        } else {
+    public ClienteResponseDTO update(Long id, ClienteRequestDTO clienteRequestDTO) {
+        if (!repository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel editar este cliente");
         }
+        Cliente cliente = repository.findById(id).get();
+        Endereco endereco = clienteRequestDTO.getEndereco().toModel();
+        endereco.setId(cliente.getEndereco().getId());
+
+        cliente = clienteRequestDTO.toModel(endereco);
+        cliente.setId(id);
+        return ClienteResponseDTO.from(repository.save(cliente));
     }
 
     public void findByRemove(Long id) {

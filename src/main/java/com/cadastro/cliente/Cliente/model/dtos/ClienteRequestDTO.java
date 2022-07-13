@@ -30,8 +30,4 @@ public class ClienteRequestDTO {
         return new Cliente(this.nome, this.email, this.cpf, this.telefone, this.dataDeNascimento);
     }
 
-    public Cliente update() {
-        return new Cliente(this.id, this.nome, this.email, this.cpf, this.telefone, this.dataDeNascimento);
-    }
-
 }

@@ -1,11 +1,10 @@
 package com.cadastro.cliente.Endereco.model.dtos;
 
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import com.cadastro.cliente.Endereco.model.entity.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 
 @Data
 @AllArgsConstructor
@@ -28,13 +27,10 @@ public class EnderecoRequestDTO {
 
     private String referencia;
 
+    private Long clienteId;
+
     public Endereco toModel() {
         return new Endereco(this.cep, this.cidade, this.estado, this.bairro, this.rua, this.numero, this.referencia);
     }
-
-    public Endereco update() {
-        return new Endereco(this.id, this.cep, this.cidade, this.estado, this.bairro, this.rua, this.numero, this.referencia);
-    }
-
 
 }

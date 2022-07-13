@@ -1,5 +1,6 @@
 package com.cadastro.cliente.Endereco.model.entity;
 
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,14 @@ public class Endereco {
         this.referencia = referencia;
     }
 
+    public String getEnderecoEscrito() {
+        return this.rua + ", " + this.numero + ", " + this.bairro + ", " + this.cidade + ", " + this.estado;
+    }
+
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "endereco_id", nullable = false)
     private Long id;
 
     @Column(name = "cep", nullable = false)
@@ -49,5 +55,8 @@ public class Endereco {
 
     @Column(name = "referencia", nullable = false)
     private String referencia;
+
+    @OneToOne(mappedBy = "endereco", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    private Cliente cliente;
 
 }

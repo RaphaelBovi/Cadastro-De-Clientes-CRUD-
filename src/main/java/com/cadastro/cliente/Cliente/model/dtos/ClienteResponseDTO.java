@@ -26,6 +26,8 @@ public class ClienteResponseDTO {
 
     private LocalDate dataDeNascimento;
 
+    private String endereco;
+
     public static ClienteResponseDTO from(Cliente cliente) {
         return new ClienteResponseDTO(
                 cliente.getId(),
@@ -33,7 +35,8 @@ public class ClienteResponseDTO {
                 cliente.getEmail(),
                 cliente.getCpf(),
                 cliente.getTelefone(),
-                cliente.getDataDeNascimento());
+                cliente.getDataDeNascimento(),
+                cliente.getEndereco() != null ? cliente.getEndereco().getEnderecoEscrito() : null );
     }
 
 }

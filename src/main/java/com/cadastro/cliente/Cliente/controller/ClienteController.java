@@ -36,6 +36,7 @@ public class ClienteController {
         return service.update(id, cliente);
     }
 
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDTO findById(@PathVariable Long id) {
