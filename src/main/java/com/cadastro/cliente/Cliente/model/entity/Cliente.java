@@ -1,4 +1,4 @@
-package com.cadastro.cliente.Cliente.entity;
+package com.cadastro.cliente.Cliente.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,7 +45,8 @@ public class Cliente {
     @Column(name = "telefone", nullable = false)
     private String telefone;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "dataNascimento", nullable = false)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "dataDeNascimento", nullable = false)
     private LocalDate dataDeNascimento;
+
 }

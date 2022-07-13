@@ -1,6 +1,6 @@
-package com.cadastro.cliente.Cliente.controller.dtos;
+package com.cadastro.cliente.Cliente.model.dtos;
 
-import com.cadastro.cliente.Cliente.entity.Cliente;
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.cadastro.cliente.Cliente.controller;
 
-import com.cadastro.cliente.Cliente.controller.dtos.ClienteRequestDTO;
-import com.cadastro.cliente.Cliente.controller.dtos.ClienteResponseDTO;
+import com.cadastro.cliente.Cliente.model.dtos.ClienteRequestDTO;
+import com.cadastro.cliente.Cliente.model.dtos.ClienteResponseDTO;
 import com.cadastro.cliente.Cliente.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @RestController
-@RequestMapping(value = "/cliente")
+@RequestMapping(value = "/api/cliente")
 public class ClienteController {
 
     @Autowired
@@ -30,6 +30,12 @@ public class ClienteController {
         return service.listCliente();
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClienteResponseDTO update(@RequestBody ClienteRequestDTO cliente, @PathVariable Long id) {
+        return service.update(id, cliente);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDTO findById(@PathVariable Long id) {
@@ -41,4 +47,5 @@ public class ClienteController {
     public void removeCliente(@PathVariable("id") Long id) {
         service.findByRemove(id);
     }
+
 }

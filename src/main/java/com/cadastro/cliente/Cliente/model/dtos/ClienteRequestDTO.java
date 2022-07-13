@@ -1,6 +1,6 @@
-package com.cadastro.cliente.Cliente.controller.dtos;
+package com.cadastro.cliente.Cliente.model.dtos;
 
-import com.cadastro.cliente.Cliente.entity.Cliente;
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ClienteRequestDTO {
 
+    private Long id;
+
     private String nome;
 
     private String email;
@@ -21,11 +23,15 @@ public class ClienteRequestDTO {
 
     private String telefone;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataDeNascimento;
 
     public Cliente toModel() {
         return new Cliente(this.nome, this.email, this.cpf, this.telefone, this.dataDeNascimento);
+    }
+
+    public Cliente update() {
+        return new Cliente(this.id, this.nome, this.email, this.cpf, this.telefone, this.dataDeNascimento);
     }
 
 }
