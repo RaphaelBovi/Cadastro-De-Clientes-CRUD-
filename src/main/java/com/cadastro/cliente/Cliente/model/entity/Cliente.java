@@ -1,6 +1,6 @@
-package com.cadastro.cliente.Cliente.entity;
+package com.cadastro.cliente.Cliente.model.entity;
 
-import lombok.AllArgsConstructor;
+import com.cadastro.cliente.Endereco.model.entity.Endereco;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,23 +12,24 @@ import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "cliente")
 public class Cliente {
 
-    public Cliente(String nome, String email, String cpf, String telefone, LocalDate dataDeNascimento) {
+    public Cliente(String nome, String email, String cpf, String telefone, LocalDate dataDeNascimento, Endereco endereco) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.dataDeNascimento = dataDeNascimento;
+        this.endereco = endereco;
     }
 
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "cliente_id", nullable = false)
     private Long id;
 
     @Column(name = "nome", nullable = false)
@@ -45,7 +46,12 @@ public class Cliente {
     @Column(name = "telefone", nullable = false)
     private String telefone;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "dataNascimento", nullable = false)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "dataDeNascimento", nullable = false)
     private LocalDate dataDeNascimento;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
 }

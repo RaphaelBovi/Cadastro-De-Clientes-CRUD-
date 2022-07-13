@@ -1,9 +1,11 @@
 package com.cadastro.cliente.Cliente.service;
 
-import com.cadastro.cliente.Cliente.controller.dtos.ClienteRequestDTO;
-import com.cadastro.cliente.Cliente.controller.dtos.ClienteResponseDTO;
-import com.cadastro.cliente.Cliente.entity.Cliente;
+import com.cadastro.cliente.Cliente.model.dtos.ClienteRequestDTO;
+import com.cadastro.cliente.Cliente.model.dtos.ClienteResponseDTO;
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import com.cadastro.cliente.Cliente.repository.ClienteRepository;
+import com.cadastro.cliente.Endereco.model.entity.Endereco;
+import com.cadastro.cliente.Endereco.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,13 +21,32 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public ClienteResponseDTO save(ClienteRequestDTO cliente) {
-        return ClienteResponseDTO.from(this.repository.save(cliente.toModel()));
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    public ClienteResponseDTO save(ClienteRequestDTO clienteRequest) {
+        Endereco endereco = enderecoRepository.save(clienteRequest.getEndereco().toModel());
+        Cliente cliente = clienteRequest.toModel(endereco);
+
+        return ClienteResponseDTO.from(repository.save(cliente));
     }
 
     public ClienteResponseDTO findById(Long id) {
-        Cliente cliente = repository.findById(id).get();
+        Cliente cliente = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel encontrar cliente"));
         return ClienteResponseDTO.from(cliente);
+    }
+
+    public ClienteResponseDTO update(Long id, ClienteRequestDTO clienteRequestDTO) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel editar este cliente");
+        }
+        Cliente cliente = repository.findById(id).get();
+        Endereco endereco = clienteRequestDTO.getEndereco().toModel();
+        endereco.setId(cliente.getEndereco().getId());
+
+        cliente = clienteRequestDTO.toModel(endereco);
+        cliente.setId(id);
+        return ClienteResponseDTO.from(repository.save(cliente));
     }
 
     public void findByRemove(Long id) {
@@ -38,10 +59,9 @@ public class ClienteService {
         }
     }
 
-
     public List<ClienteResponseDTO> listCliente() {
         return repository.findAll()
-                .stream().map(cliente -> ClienteResponseDTO.from(cliente))
+                .stream().map(ClienteResponseDTO::from)
                 .collect(Collectors.toList());
     }
 

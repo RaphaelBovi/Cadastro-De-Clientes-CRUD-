@@ -1,6 +1,6 @@
-package com.cadastro.cliente.Cliente.controller.dtos;
+package com.cadastro.cliente.Cliente.model.dtos;
 
-import com.cadastro.cliente.Cliente.entity.Cliente;
+import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +26,8 @@ public class ClienteResponseDTO {
 
     private LocalDate dataDeNascimento;
 
+    private String endereco;
+
     public static ClienteResponseDTO from(Cliente cliente) {
         return new ClienteResponseDTO(
                 cliente.getId(),
@@ -33,7 +35,8 @@ public class ClienteResponseDTO {
                 cliente.getEmail(),
                 cliente.getCpf(),
                 cliente.getTelefone(),
-                cliente.getDataDeNascimento());
+                cliente.getDataDeNascimento(),
+                cliente.getEndereco() != null ? cliente.getEndereco().getEnderecoEscrito() : null );
     }
 
 }
