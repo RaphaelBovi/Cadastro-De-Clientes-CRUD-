@@ -17,12 +17,13 @@ import java.time.LocalDate;
 @Table(name = "cliente")
 public class Cliente {
 
-    public Cliente(String nome, String email, String cpf, String telefone, LocalDate dataDeNascimento) {
+    public Cliente(String nome, String email, String cpf, String telefone, LocalDate dataDeNascimento, Endereco endereco) {
         this.email = email;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.dataDeNascimento = dataDeNascimento;
+        this.endereco = endereco;
     }
 
     @Setter

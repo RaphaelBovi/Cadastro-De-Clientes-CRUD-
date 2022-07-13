@@ -4,6 +4,8 @@ import com.cadastro.cliente.Cliente.model.dtos.ClienteRequestDTO;
 import com.cadastro.cliente.Cliente.model.dtos.ClienteResponseDTO;
 import com.cadastro.cliente.Cliente.model.entity.Cliente;
 import com.cadastro.cliente.Cliente.repository.ClienteRepository;
+import com.cadastro.cliente.Endereco.model.entity.Endereco;
+import com.cadastro.cliente.Endereco.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,18 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public ClienteResponseDTO save(ClienteRequestDTO cliente) {
-        return ClienteResponseDTO.from(repository.save(cliente.toModel()));
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    public ClienteResponseDTO save(ClienteRequestDTO clienteRequest) {
+        Endereco endereco = enderecoRepository.save(clienteRequest.getEndereco().toModel());
+        Cliente cliente = clienteRequest.toModel(endereco);
+
+        return ClienteResponseDTO.from(repository.save(cliente));
     }
 
     public ClienteResponseDTO findById(Long id) {
-        Cliente cliente = repository.findById(id).get();
+        Cliente cliente = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi possivel encontrar cliente"));
         return ClienteResponseDTO.from(cliente);
     }
 
